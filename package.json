@@ -1,0 +1,40 @@
+{
+  "name": "electron-updater-digitalocean-example",
+  "version": "0.0.1",
+  "main": "main.js",
+  "description": "electron-updater DigitalOcean example",
+  "author": "Nate Armagost",
+  "scripts": {
+    "publish": "electron-builder -p always",
+    "electron": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^6.0.10",
+    "electron-builder": "^21.2.0"
+  },
+  "dependencies": {
+    "electron-log": "^3.0.8",
+    "electron-updater": "^4.1.2"
+  },
+  "build": {
+    "appId": "com.digitalocean.nate.dospaces",
+    "mac": {
+      "category": "your.app.category.type",
+      "target": [
+        "zip",
+        "dmg"
+      ],
+      "publish": {
+        "provider": "spaces",
+        "name": "xxxxxxxxxx",
+        "region": "nyc3",
+        "acl": "public-read"
+      }
+    },
+    "asar": false,
+    "files": [
+      "!electron-builder.env"
+    ]
+  },
+  "productName": "Example"
+}

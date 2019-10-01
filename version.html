@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Electron Updater Example</title>
+    <style type="text/css">
+      .progress-bar {
+        user-select: none;
+        border-radius: 4px;
+        box-shadow: inset 0 0.5em 0.5em rgba(0, 0, 0, 0.05);
+        height: 20px;
+        margin: 0 0 10px;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        background-color: royalblue;
+      }
+
+      .progress {
+        background-color: #ececec;
+        box-shadow: inset 0 0.5em 0.5em rgba(0, 0, 0, 0.05);
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: all 500ms ease-out;
+        transform: translateX(0%);
+      }
+    </style>
+  </head>
+  <body>
+    Current version: <span id="version">vX.Y.Z</span>
+
+    <div class="progress-bar">
+      <div class="progress" id="bar"></div>
+    </div>
+    <div id="mbps"></div>
+
+    <div id="messages"></div>
+    <script>
+      // Display the current version
+      let version = window.location.hash.substring(1);
+      document.getElementById("version").innerText = version;
+
+      // Listen for messages
+      const { ipcRenderer } = require("electron");
+      const container = document.getElementById("messages");
+      const bar = document.getElementById("bar");
+      const mbps = document.getElementById("mbps");
+
+      ipcRenderer.on("message", function(event, message) {
+        try {
+          if (message.event) {
+            var info = document.createElement("div");
+            info.innerHTML = message.event;
+            container.appendChild(info);
+
+            if (message.progress) {
+              bar.style.transform = `translateX(${message.progress.percent}%)`;
+              mbps.innerHTML = `${(
+                message.progress.bytesPerSecond / 1000000
+              ).toFixed(2)} MBps`;
+            }
+          }
+        } catch (e) {
+          console.log("Could not parse the message");
+        }
+      });
+    </script>
+  </body>
+</html>
