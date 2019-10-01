@@ -4,6 +4,8 @@ This repo contains the **bare minimum code** to have an auto-updating Electron a
 
 Also see [`electron-builder Spaces Docs`](https://www.electron.build/configuration/publish.html#spacesoptions).  
 
+Thanks to [`The original example`](https://github.com/iffy/electron-updater-example) to get this started.  
+
 ### macOS apps must be signed and notarized
 The link below is a good start:  
 https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/  
@@ -17,10 +19,13 @@ Something like https://xxxxxxxxxx.nyc3.digitaloceanspaces.com where `xxxxxxxxxx`
 [`This is a good start`](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key).  
 Make sure to grab the `DO_SECRET_KEY` because it disappears off the screen pretty quickly.
 
-### 2. Set the DO_KEY_ID and DO_SECRET_KEY
-Change the keys in the `electron-builder.env` file.
+### 2. Set the DO_KEY_ID and DO_SECRET_KEY in electron-builder.env
+Change the keys in the `electron-builder.env` file.  
+
+```
 DO_KEY_ID=XXXXXXXXXXXXXXXXXXXX  
 DO_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  
+```
 
 When build/publishing the actual app with `npm run publish`, the DO_KEY_ID/DO_SECRET_KEY are used to push the files to the *Space* (equivalent of Amazon's bucket).
 
@@ -44,15 +49,20 @@ When build/publishing the actual app with `npm run publish`, the DO_KEY_ID/DO_SE
   },
 ```
 
-*** You can set this to `"private"`. But then auto-update will not work until you login to your DigitalOcean Spaces and set the files as **Public**. This part was the cause of a lot of headaches. You might want **Private** files if you don't want the users to have access to the newest release right away.
+*** You can set `"acl"` to `"private"`. But then auto-update will not work until you login to your DigitalOcean Spaces and set the files as **Public**. This was the cause of a lot of headaches. You might want **Private** files if you don't want the users to have access to the newest release right away, but eventually the files have to go **Public**. When doing the actual auto-update, electron-updater does not send the keys when the file is requested, so **Private** files do not work.
 
 ### 3. Install necessary dependencies
-`yarn`  
+`yarn` (I haven't tested this yet)  
 or  
 `npm install`  
 
-### 4. Publish
+### 4. Publish a build
 `npm run publish`
+
+...  
+Wait for it to upload  
+...  
+...  
 
 ### 5. Set the files in DigitalOcean to Public
 Set all of the files that were just uploaded to **Public** if you had the `"acl": "private"` flag set. Skip this step if `"acl": "public-read"`.
@@ -78,3 +88,5 @@ But the first time you run the app, it should create the data folder.
 Remove the app from the `Applications` folder.  
 Build and publish and app. Run the .dmg and drag the app in to `Applications` folder.  
 Bump the version and try another time.  
+
+Also try running `npm run electron` to just run the non-built version of the app.  
