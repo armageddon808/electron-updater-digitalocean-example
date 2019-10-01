@@ -1,5 +1,7 @@
 # electron-updater DigitalOcean Spaces Example
 
+![](download.gif)
+
 This repo contains the **bare minimum code** to have an auto-updating Electron app using [`electron-updater`](https://www.electron.build/auto-update) with releases stored on DigitalOcean's Spaces.  
 
 Also see [`electron-builder Spaces Docs`](https://www.electron.build/configuration/publish.html#spacesoptions).  
@@ -60,17 +62,17 @@ or
 `npm run publish`
 
 ...  
-Wait for it to upload  
+Wait for it to upload...  
 ...  
 ...  
 
 ### 5. Set the files in DigitalOcean to Public
-Set all of the files that were just uploaded to **Public** if you had the `"acl": "private"` flag set. Skip this step if `"acl": "public-read"`.
+Set all of the files that were just uploaded to **Public** if you had the `"acl": "private"` flag set. *Skip this step if* `"acl": "public-read"`.
 
 ### 6. Run the application that was just created.
-Run the .dmg and drag the app into the `Applications` folder and run the app. That will create a folder at:  
+Run the .dmg, drag the app into the `Applications` folder, and run the app. That will create a folder at:  
 `~/Library/Application\ Support/Example` with the app data.  
-Quit the app for the time being, and the continue to build a new version...  
+After it opens, quit the app for the time being, and the continue to build a new version...  
 
 FYI:  
 Remove that folder if you have any issues.  
@@ -80,13 +82,16 @@ But the first time you run the app, it should create the data folder.
 ### 7. Build a new version and test the auto-update
 - Bump the `version` in `package.json`  
 - Do another `npm run publish`  
-- Re-open the **old app** and it should check for updates and grab the newest files that were just set to *Public*.  
+- Re-open the **old app** and it should check for updates and grab the newest files.  
 
 
 ## Troubleshooting
+A few options to try:  
+
 `rm -rf ~/Library/Application\ Support/Example` to get rid of all the data.  
 Remove the app from the `Applications` folder.  
-Build and publish and app. Run the .dmg and drag the app in to `Applications` folder.  
-Bump the version and try another time.  
+Start the process again with a bumped version.   
 
 Also try running `npm run electron` to just run the non-built version of the app.  
+
+Clear out your DigitalOcean Spaces because it can fill up pretty quick when testing.   
