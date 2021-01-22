@@ -9,12 +9,12 @@
     "electron": "electron ."
   },
   "devDependencies": {
-    "electron": "^6.0.10",
-    "electron-builder": "^21.2.0"
+    "electron": "^11.2.0",
+    "electron-builder": "^22.9.1"
   },
   "dependencies": {
-    "electron-log": "^3.0.8",
-    "electron-updater": "^4.1.2"
+    "electron-log": "^4.3.1",
+    "electron-updater": "^4.3.5"
   },
   "build": {
     "appId": "com.digitalocean.nate.dospaces",
